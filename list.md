@@ -184,3 +184,22 @@ void pop_back() {
 ### 查找修改
 
 ​	与其他容器一样，可以调用STL算法结构Find来查找相应值的节点。通常调用begin等接口获取List的迭代器，通过遍历的方式查找和访问元素，修改元素的值也依赖于迭代器。
+
+### transfer
+
+​	transfer是list内部函数，作用是把List中的一段插入到某个位置，可以是两个List之间，也可以是同一个List，起源码如下，
+
+```c++
+void transfer(iterator position, iterator first, iterator last) {
+    if (position != last) {
+        (*(link_type((*last.node).prev))).next = position.node;
+        (*(link_type((*first.node).prev))).next = last.node;
+        (*(link_type((*position.node).prev))).next = first.node;  
+        link_type tmp = link_type((*position.node).prev);
+        (*position.node).prev = (*last.node).prev;
+        (*last.node).prev = (*first.node).prev; 
+        (*first.node).prev = tmp;
+    }
+}
+```
+
