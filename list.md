@@ -203,3 +203,29 @@ void transfer(iterator position, iterator first, iterator last) {
 }
 ```
 
+​	可以将此过程理解为范围为[first, last)的List的删除后插入到另一段List的position处，具体可分为7步，分别对应与7行源码实现，如下图，摘自《STL源码剖析》
+
+![](C:\Users\mo\Documents\GitHub\stlNote\无标题.png)
+
+基于transfer即可实现两个List的插入拼接操作，即接口splice，起源吗如下，
+
+```c++
+void splice(iterator position, list& x) {
+if (!x.empty()) 
+transfer(position, x.begin(), x.end());
+}
+void splice(iterator position, list&, iterator i) {
+iterator j = i;
+++j;
+if (position == i || position == j) return;
+transfer(position, i, j);
+}
+void splice(iterator position, list&, iterator first, iterator last) {
+if (first != last) 
+transfer(position, first, last);
+}
+```
+
+排序
+
+​	由于LIst不支持随机访问，所以不适用STL算法中的sort，其实现是快速排序，所以List内部实现了sort接口，
