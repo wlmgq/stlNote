@@ -228,4 +228,4 @@ transfer(position, first, last);
 
 排序
 
-​	由于LIst不支持随机访问，所以不适用STL算法中的sort，其实现是快速排序，所以List内部实现了sort接口，
+​	由于LIst不支持随机访问，所以不适用STL算法中的sort，他的实现是快速排序，需要容器支持随机访问，所以List内部实现了sort接口。sort的实现依赖于上述的splice接口和List内部实现的并归函数merge，即将两个有序的List合并成一个有序的List，，源码如下， 
